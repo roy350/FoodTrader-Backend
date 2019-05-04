@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "bcrypt": "^3.0.6",
+    "dotenv": "^8.0.0",
     "koa": "^2.7.0",
     "koa-body": "^4.1.0",
     "koa-flash-message": "^0.1.6",
