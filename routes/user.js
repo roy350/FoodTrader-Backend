@@ -6,7 +6,7 @@ router.get('users', '/', async ctx => {
   try {
     const users = await ctx.orm.user.findAll();
     ctx.body = users;
-  } catch {
+  } catch (validationError) {
     ctx.throw(500, `${validationError}`);
   }
 });
