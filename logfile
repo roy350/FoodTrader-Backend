@@ -6,3 +6,18 @@
 2019-05-04 15:47:22.015 -04 [60141] FATAL:  database "FoodTrader" does not exist
 2019-05-04 15:48:58.056 -04 [60215] ERROR:  database "foodtrader" already exists
 2019-05-04 15:48:58.056 -04 [60215] STATEMENT:  CREATE DATABASE FoodTrader;
+2019-05-04 17:27:22.340 -04 [64675] ERROR:  invalid input syntax for integer: "[object Object]" at character 152
+2019-05-04 17:27:22.340 -04 [64675] STATEMENT:  SELECT "id", "name", "username", "password", "address", "email", "isOrganization", "createdAt", "updatedAt" FROM "users" AS "user" WHERE "user"."id" = '[object Object]' LIMIT 1;
+2019-05-04 17:28:12.869 -04 [64728] ERROR:  invalid input syntax for integer: "[object Object]" at character 152
+2019-05-04 17:28:12.869 -04 [64728] STATEMENT:  SELECT "id", "name", "username", "password", "address", "email", "isOrganization", "createdAt", "updatedAt" FROM "users" AS "user" WHERE "user"."id" = '[object Object]' LIMIT 1;
+2019-05-04 17:28:31.741 -04 [64752] ERROR:  invalid input syntax for integer: "[object Object]" at character 152
+2019-05-04 17:28:31.741 -04 [64752] STATEMENT:  SELECT "id", "name", "username", "password", "address", "email", "isOrganization", "createdAt", "updatedAt" FROM "users" AS "user" WHERE "user"."id" = '[object Object]' LIMIT 1;
+2019-05-04 17:28:55.442 -04 [64796] ERROR:  invalid input syntax for integer: "[object Object]" at character 152
+2019-05-04 17:28:55.442 -04 [64796] STATEMENT:  SELECT "id", "name", "username", "password", "address", "email", "isOrganization", "createdAt", "updatedAt" FROM "users" AS "user" WHERE "user"."id" = '[object Object]' LIMIT 1;
+2019-05-04 18:00:03.017 -04 [66248] ERROR:  syntax error at or near ":" at character 18
+2019-05-04 18:00:03.017 -04 [66248] STATEMENT:  drop table users
+	:
+	;
+2019-05-04 18:31:11.281 -04 [67895] ERROR:  null value in column "isActive" violates not-null constraint
+2019-05-04 18:31:11.281 -04 [67895] DETAIL:  Failing row contains (1, Jorge, jabecerra, $2b$10$1asK198Qpt786nZbQ/nnoO0VrszmYiqKPMkE32QKd4y0aM9G/wmMC, fray, jabecerra@uc.cl, f, null, 2019-05-04 22:31:11.087+00, 2019-05-04 22:31:11.087+00).
+2019-05-04 18:31:11.281 -04 [67895] STATEMENT:  INSERT INTO "users" ("name","username","password","address","email","isOrganization","updatedAt","createdAt") VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *;
