@@ -9,7 +9,7 @@ const config = {
   },
   development: {
     extend: 'default',
-    database: 'FoodTrader',
+    database: 'foodtrader',
   },
   test: {
     extend: 'default',
