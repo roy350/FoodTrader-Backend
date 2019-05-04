@@ -1,8 +1,0 @@
-2019-05-04 15:09:56.907 -04 [59171] LOG:  listening on IPv6 address "::1", port 5432
-2019-05-04 15:09:56.907 -04 [59171] LOG:  listening on IPv4 address "127.0.0.1", port 5432
-2019-05-04 15:09:56.908 -04 [59171] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
-2019-05-04 15:09:56.939 -04 [59172] LOG:  database system was shut down at 2019-04-20 20:05:33 -04
-2019-05-04 15:09:56.949 -04 [59171] LOG:  database system is ready to accept connections
-2019-05-04 15:47:22.015 -04 [60141] FATAL:  database "FoodTrader" does not exist
-2019-05-04 15:48:58.056 -04 [60215] ERROR:  database "foodtrader" already exists
-2019-05-04 15:48:58.056 -04 [60215] STATEMENT:  CREATE DATABASE FoodTrader;

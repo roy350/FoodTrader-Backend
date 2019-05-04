@@ -1,15 +1,17 @@
 /* eslint no-console: "off" */
 
-const app = require('./src/app');
-const db = require('./src/models');
+const app = require('./app');
+const db = require('./models');
 
 const PORT = process.env.PORT || 3000;
 
 db.sequelize
   .authenticate()
   .then(() => {
-    console.log('Connection to the database has been established successfully.');
-    app.listen(PORT, (err) => {
+    console.log(
+      'Connection to the database has been established successfully.'
+    );
+    app.listen(PORT, err => {
       if (err) {
         return console.error('Failed', err);
       }
