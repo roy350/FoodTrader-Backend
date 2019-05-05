@@ -4,7 +4,7 @@ const router = new KoaRouter();
 
 router.get('users', '/', async ctx => {
   try {
-    const users = await ctx.orm.user.findAll();
+    const users = await ctx.orm.user.findAll({ where: { isActive: true } });
     ctx.body = users;
   } catch (validationError) {
     ctx.throw(500, `${validationError}`);
@@ -13,7 +13,9 @@ router.get('users', '/', async ctx => {
 
 router.get('users', '/:id', async ctx => {
   try {
-    const user = await ctx.orm.user.findOne({ where: { id: ctx.params.id } });
+    const user = await ctx.orm.user.findOne({
+      where: { id: ctx.params.id, isActive: true },
+    });
     if (!user) {
       ctx.status = 404;
       ctx.message = 'User not found';
