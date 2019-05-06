@@ -3,14 +3,12 @@ require('dotenv').config();
 const KoaRouter = require('koa-router');
 const jwt = require('koa-jwt');
 
-const index = require('./routes/index');
 const user = require('./routes/user');
 const auth = require('./routes/auth');
 const usersPost = require('./routes/userPost');
 
 const router = new KoaRouter();
 
-router.use('/', index.routes());
 router.use('/auth', auth.routes());
 router.use('/userPost', usersPost.routes());
 

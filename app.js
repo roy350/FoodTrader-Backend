@@ -8,9 +8,12 @@ const session = require('koa-session');
 const override = require('koa-override-method');
 const routes = require('./routes');
 const orm = require('./models');
+const cors = require('koa-cors');
+const KoaRouter = require('koa-router');
 
 // App constructor
 const app = new Koa();
+const router = new KoaRouter();
 
 app.keys = [
   'these secret keys are used to sign HTTP cookies',
@@ -68,5 +71,13 @@ app.use((ctx, next) => {
 
 // Routing middleware
 app.use(routes.routes());
+
+// Fix Cors errors
+app.use(cors());
+app.use(router.routes()).use(router.allowedMethods());
+
+router.get('/', async ctx => {
+  ctx.body = 'Probando';
+});
 
 module.exports = app;
