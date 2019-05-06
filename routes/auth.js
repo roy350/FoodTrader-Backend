@@ -8,7 +8,7 @@ router.post('auth', '/', async ctx => {
   const user = await ctx.orm.user.findOne({ where: { username } });
   if (!user) {
     ctx.status = 404;
-    ctx.message = 'Wrong email';
+    ctx.message = 'Wrong username';
     return ctx.message;
   }
   if (await user.checkPassword(password)) {
