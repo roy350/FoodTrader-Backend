@@ -27,7 +27,7 @@ router.get('users', '/:id', async ctx => {
       if (!user) {
         ctx.status = 404;
         ctx.message = 'User not found';
-        return ctx.message;
+        return { message: ctx.message, status: ctx.status };
       }
       ctx.body = user;
     } catch (validationError) {
@@ -45,7 +45,7 @@ router.patch('user.update', '/edit/:id', async ctx => {
       if (!user) {
         ctx.status = 404;
         ctx.message = 'User not found';
-        return ctx.message;
+        return { message: ctx.message, status: ctx.status };
       }
       try {
         const { name, username, password, address, email } = ctx.request.body;
@@ -53,15 +53,19 @@ router.patch('user.update', '/edit/:id', async ctx => {
       } catch (validationError) {
         ctx.throw(500, `${validationError}`);
       }
-      ctx.body = 'User updated correctly';
       ctx.status = 200;
+      ctx.body = {
+        message: 'User updated correctly',
+        status: ctx.status,
+        user,
+      };
     } catch (validationError) {
       ctx.throw(500, `${validationError}`);
     }
   } else {
     ctx.status = 401;
     ctx.message = 'Unauthorized for update user';
-    return ctx.message;
+    return { message: ctx.message, status: ctx.status };
   }
 });
 
@@ -74,7 +78,7 @@ router.del('user.delete', '/:id', async ctx => {
       if (!user) {
         ctx.status = 404;
         ctx.message = 'User not found';
-        return ctx.message;
+        return { message: ctx.message, status: ctx.status };
       }
       try {
         const isActive = false;
@@ -82,15 +86,19 @@ router.del('user.delete', '/:id', async ctx => {
       } catch (validationError) {
         ctx.throw(500, `${validationError}`);
       }
-      ctx.body = 'User deleted correctly';
       ctx.status = 200;
+      ctx.body = {
+        message: 'User deleted correctly',
+        status: ctx.status,
+        user,
+      };
     } catch (validationError) {
       ctx.throw(500, `${validationError}`);
     }
   } else {
     ctx.status = 401;
     ctx.message = 'Unauthorized for delete user';
-    return ctx.message;
+    return { message: ctx.message, status: ctx.status };
   }
 });
 
