@@ -36,7 +36,7 @@ router.get('users', '/:id', async ctx => {
   }
 });
 
-router.patch('user.update', '/edit/:id', async ctx => {
+router.patch('user.update', '/:id', async ctx => {
   const token = ctx.request.header.authorization.slice(7);
   const currentUser = jwt.verify(token, process.env.WORD_SECRET);
   if (currentUser.id === Number(ctx.params.id)) {
