@@ -21,7 +21,7 @@ router.post('auth', '/', async ctx => {
         expiresIn: '12h',
       }
     );
-    ctx.body = { token };
+    return { token };
   } else {
     ctx.status = 404;
     ctx.message = 'Wrong password';
