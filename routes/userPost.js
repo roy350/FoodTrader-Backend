@@ -2,7 +2,7 @@ const KoaRouter = require('koa-router');
 
 const router = new KoaRouter();
 
-router.post('user.create', '/new', async ctx => {
+router.post('user.create', '/', async ctx => {
   const user = ctx.orm.user.build(ctx.request.body);
   try {
     await user.save({
@@ -18,8 +18,8 @@ router.post('user.create', '/new', async ctx => {
   } catch (validationError) {
     ctx.throw(500, `${validationError}`);
   }
-  ctx.body = 'User created correctly';
   ctx.status = 201;
+  ctx.body = { message: 'User created correctly', status: ctx.status, user };
 });
 
 module.exports = router;

@@ -10,7 +10,7 @@ const usersPost = require('./routes/userPost');
 const router = new KoaRouter();
 
 router.use('/auth', auth.routes());
-router.use('/userPost', usersPost.routes());
+router.use('/users', usersPost.routes());
 
 router.use(jwt({ secret: process.env.WORD_SECRET, key: 'authData' }));
 router.use(async (ctx, next) => {
