@@ -21,7 +21,7 @@ router.post('auth', '/', async ctx => {
         expiresIn: '12h',
       }
     );
-    ctx.body = { token };
+    ctx.body = [{ token }];
     return ctx.body;
   } else {
     ctx.status = 404;

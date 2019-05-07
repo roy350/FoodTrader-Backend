@@ -24,15 +24,15 @@ router.get('users', '/:id', async ctx => {
   const currentUser = jwt.verify(token, process.env.WORD_SECRET);
   if (currentUser) {
     try {
-      const user = await ctx.orm.user.findOne({
-        where: { id: ctx.params.id, isActive: true },
-      });
+      const user = await ctx.orm.user
+        .findAll({ where: {id: ctx.params.id, isActive: true } })
+        .map(element => element.get({ plain: true }));
       if (!user) {
         ctx.status = 404;
         ctx.message = 'User not found';
         return { message: ctx.message, status: ctx.status };
       }
-      ctx.body = user.get({ plain: true });
+      ctx.body = user;
       return ctx.body;
     } catch (validationError) {
       ctx.throw(500, `${validationError}`);
@@ -58,11 +58,11 @@ router.patch('user.update', '/:id', async ctx => {
         ctx.throw(500, `${validationError}`);
       }
       ctx.status = 200;
-      ctx.body = {
+      ctx.body = [{
         message: 'User updated correctly',
         status: ctx.status,
         user: user.get({ plain: true }),
-      };
+      }];
       return ctx.body;
     } catch (validationError) {
       ctx.throw(500, `${validationError}`);
@@ -92,11 +92,11 @@ router.del('user.delete', '/:id', async ctx => {
         ctx.throw(500, `${validationError}`);
       }
       ctx.status = 200;
-      ctx.body = {
+      ctx.body = [{
         message: 'User deleted correctly',
         status: ctx.status,
         user: user.get({ plain: true }),
-      };
+      }];
       return ctx.body;
     } catch (validationError) {
       ctx.throw(500, `${validationError}`);
