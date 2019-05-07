@@ -19,11 +19,13 @@ router.post('user.create', '/', async ctx => {
     ctx.throw(500, `${validationError}`);
   }
   ctx.status = 201;
-  ctx.body = [{
-    message: 'User updated correctly',
-    status: ctx.status,
-    user: user.get({ plain: true }),
-  }];
+  ctx.body = [
+    {
+      message: 'User created correctly',
+      status: ctx.status,
+      user: user.get({ plain: true }),
+    },
+  ];
   return ctx.body;
 });
 
