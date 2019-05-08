@@ -16,6 +16,10 @@ router.get('users', '/', async ctx => {
     } catch (validationError) {
       ctx.throw(500, `${validationError}`);
     }
+  } else {
+    ctx.status = 403;
+    ctx.message = 'You must be logged';
+    return { message: ctx.message, status: ctx.status };
   }
 });
 
@@ -37,41 +41,53 @@ router.get('users', '/:id', async ctx => {
     } catch (validationError) {
       ctx.throw(500, `${validationError}`);
     }
+  } else {
+    ctx.status = 403;
+    ctx.message = 'You must be logged';
+    return { message: ctx.message, status: ctx.status };
   }
 });
 
 router.put('user.update', '/:id', async ctx => {
   const token = ctx.request.header.authorization.slice(7);
   const currentUser = jwt.verify(token, process.env.WORD_SECRET);
-  if (currentUser.id === Number(ctx.params.id)) {
-    try {
-      const user = await ctx.orm.user.findOne({ where: { id: ctx.params.id } });
-      if (!user) {
-        ctx.status = 404;
-        ctx.message = 'User not found';
-        return { message: ctx.message, status: ctx.status };
-      }
+  if (currentUser) {
+    if (currentUser.id === Number(ctx.params.id)) {
       try {
-        const { name, username, password, address, email } = ctx.request.body;
-        await user.update({ username, name, password, address, email });
+        const user = await ctx.orm.user.findOne({
+          where: { id: ctx.params.id },
+        });
+        if (!user) {
+          ctx.status = 404;
+          ctx.message = 'User not found';
+          return { message: ctx.message, status: ctx.status };
+        }
+        try {
+          const { name, username, password, address, email } = ctx.request.body;
+          await user.update({ username, name, password, address, email });
+        } catch (validationError) {
+          ctx.throw(500, `${validationError}`);
+        }
+        ctx.status = 200;
+        ctx.body = [
+          {
+            message: 'User updated correctly',
+            status: ctx.status,
+            user: user.get({ plain: true }),
+          },
+        ];
+        return ctx.body;
       } catch (validationError) {
         ctx.throw(500, `${validationError}`);
       }
-      ctx.status = 200;
-      ctx.body = [
-        {
-          message: 'User updated correctly',
-          status: ctx.status,
-          user: user.get({ plain: true }),
-        },
-      ];
-      return ctx.body;
-    } catch (validationError) {
-      ctx.throw(500, `${validationError}`);
+    } else {
+      ctx.status = 401;
+      ctx.message = 'Unauthorized for update user';
+      return { message: ctx.message, status: ctx.status };
     }
   } else {
-    ctx.status = 401;
-    ctx.message = 'Unauthorized for update user';
+    ctx.status = 403;
+    ctx.message = 'You must be logged';
     return { message: ctx.message, status: ctx.status };
   }
 });
@@ -79,35 +95,43 @@ router.put('user.update', '/:id', async ctx => {
 router.del('user.delete', '/:id', async ctx => {
   const token = ctx.request.header.authorization.slice(7);
   const currentUser = jwt.verify(token, process.env.WORD_SECRET);
-  if (currentUser.id === Number(ctx.params.id)) {
-    try {
-      const user = await ctx.orm.user.findOne({ where: { id: ctx.params.id } });
-      if (!user) {
-        ctx.status = 404;
-        ctx.message = 'User not found';
-        return { message: ctx.message, status: ctx.status };
-      }
+  if (currentUser) {
+    if (currentUser.id === Number(ctx.params.id)) {
       try {
-        const isActive = false;
-        await user.update({ isActive });
+        const user = await ctx.orm.user.findOne({
+          where: { id: ctx.params.id },
+        });
+        if (!user) {
+          ctx.status = 404;
+          ctx.message = 'User not found';
+          return { message: ctx.message, status: ctx.status };
+        }
+        try {
+          const isActive = false;
+          await user.update({ isActive });
+        } catch (validationError) {
+          ctx.throw(500, `${validationError}`);
+        }
+        ctx.status = 200;
+        ctx.body = [
+          {
+            message: 'User deleted correctly',
+            status: ctx.status,
+            user: user.get({ plain: true }),
+          },
+        ];
+        return ctx.body;
       } catch (validationError) {
         ctx.throw(500, `${validationError}`);
       }
-      ctx.status = 200;
-      ctx.body = [
-        {
-          message: 'User deleted correctly',
-          status: ctx.status,
-          user: user.get({ plain: true }),
-        },
-      ];
-      return ctx.body;
-    } catch (validationError) {
-      ctx.throw(500, `${validationError}`);
+    } else {
+      ctx.status = 401;
+      ctx.message = 'Unauthorized for delete user';
+      return { message: ctx.message, status: ctx.status };
     }
   } else {
-    ctx.status = 401;
-    ctx.message = 'Unauthorized for delete user';
+    ctx.status = 403;
+    ctx.message = 'You must be logged';
     return { message: ctx.message, status: ctx.status };
   }
 });
