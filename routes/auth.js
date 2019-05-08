@@ -15,6 +15,12 @@ router.post('auth', '/', async ctx => {
     const token = jwt.sign(
       {
         id: user.id,
+        username: user.username,
+        password: user.password,
+        address: user.address,
+        email: user.email,
+        isOrganization: user.isOrganization,
+        isActive: user.isActive,
       },
       process.env.WORD_SECRET,
       {
