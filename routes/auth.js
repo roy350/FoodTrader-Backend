@@ -9,7 +9,8 @@ router.post('auth', '/', async ctx => {
   if (!user) {
     ctx.status = 404;
     ctx.message = 'Wrong username';
-    return { message: ctx.message, status: ctx.status };
+    ctx.body = { message: ctx.message, status: ctx.status };
+    return ctx.body;
   }
   if (await user.checkPassword(password)) {
     const token = jwt.sign(
@@ -27,12 +28,13 @@ router.post('auth', '/', async ctx => {
         expiresIn: '12h',
       }
     );
-    ctx.body = [{ token }];
+    ctx.body = { token };
     return ctx.body;
   } else {
     ctx.status = 404;
     ctx.message = 'Wrong password';
-    return { message: ctx.message, status: ctx.status };
+    ctx.body = { message: ctx.message, status: ctx.status };
+    return ctx.body;
   }
 });
 

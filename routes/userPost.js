@@ -16,16 +16,17 @@ router.post('user.create', '/', async ctx => {
       ],
     });
   } catch (validationError) {
-    ctx.throw(500, `${validationError}`);
+    ctx.status = 500;
+    ctx.message = 'Internal Server Error';
+    ctx.body = { message: ctx.message, status: ctx.status };
+    return ctx.body;
   }
   ctx.status = 201;
-  ctx.body = [
-    {
-      message: 'User created correctly',
-      status: ctx.status,
-      user: user.get({ plain: true }),
-    },
-  ];
+  ctx.body = {
+    message: 'User created correctly',
+    status: ctx.status,
+    user: user.get({ plain: true }),
+  };
   return ctx.body;
 });
 
