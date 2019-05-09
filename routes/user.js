@@ -57,6 +57,46 @@ router.get('users', '/:id', async ctx => {
   }
 });
 
+router.get('users', '/:id/publications', async ctx => {
+  const token = ctx.request.header.authorization.slice(7);
+  const currentUser = jwt.verify(token, process.env.WORD_SECRET);
+  if (currentUser) {
+    try {
+      const user = await ctx.orm.user.findOne({
+        where: { id: ctx.params.id, isActive: true },
+      });
+      if (!user) {
+        ctx.status = 404;
+        ctx.message = 'User not found';
+        ctx.body = { message: ctx.message, status: ctx.status };
+        return ctx.body;
+      }
+      try {
+        const publications = await ctx.orm.publication
+          .findAll({ where: { userId: ctx.params.id, isActive: true } })
+          .map(element => element.get({ plain: true }));
+        ctx.body = publications;
+        return ctx.body;
+      } catch (validationError) {
+        ctx.status = 500;
+        ctx.message = 'Internal Server Error';
+        ctx.body = { message: ctx.message, status: ctx.status };
+        return ctx.body;
+      }
+    } catch (validationError) {
+      ctx.status = 500;
+      ctx.message = 'Internal Server Error';
+      ctx.body = { message: ctx.message, status: ctx.status };
+      return ctx.body;
+    }
+  } else {
+    ctx.status = 403;
+    ctx.message = 'You must be logged';
+    ctx.body = { message: ctx.message, status: ctx.status };
+    return ctx.body;
+  }
+});
+
 router.put('user.update', '/:id', async ctx => {
   const token = ctx.request.header.authorization.slice(7);
   const currentUser = jwt.verify(token, process.env.WORD_SECRET);
