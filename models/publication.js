@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       content: DataTypes.STRING,
       isActive: DataTypes.BOOLEAN,
       place: DataTypes.STRING,
+      image: DataTypes.STRING,
     },
     {}
   );
