@@ -17,6 +17,9 @@ module.exports = {
       place: {
         type: Sequelize.STRING,
       },
+      image: {
+        type: Sequelize.STRING,
+      },
       isActive: {
         allowNull: false,
         type: Sequelize.BOOLEAN,

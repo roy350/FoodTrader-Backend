@@ -16,8 +16,13 @@ router.post('user.create', '/', async ctx => {
       ],
     });
   } catch (validationError) {
+    if (validationError.name === 'SequelizeUniqueConstraintError') {
+      validationError = validationError.errors[0].message;
+    } else {
+      validationError = validationError.parent.column + ' must not be empty';
+    }
     ctx.status = 500;
-    ctx.message = 'Internal Server Error';
+    ctx.message = validationError;
     ctx.body = { message: ctx.message, status: ctx.status };
     return ctx.body;
   }
