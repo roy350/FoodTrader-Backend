@@ -75,7 +75,7 @@ router.get('users', '/:id/publications', async ctx => {
         const publications = await ctx.orm.publication
           .findAll({ where: { userId: ctx.params.id, isActive: true } })
           .map(element => element.get({ plain: true }));
-        ctx.body = publications;
+        ctx.body = { publications, user: user.get({ plain: true }) };
         return ctx.body;
       } catch (validationError) {
         ctx.status = 500;
