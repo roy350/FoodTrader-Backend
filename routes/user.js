@@ -113,8 +113,8 @@ router.put('user.update', '/:id', async ctx => {
           return ctx.body;
         }
         try {
-          const { name, username, password, address, email, isOrganization } = ctx.request.body;
-          await user.update({ username, name, password, address, email, isOrganization });
+          const { name, username, password, address, email } = ctx.request.body;
+          await user.update({ username, name, password, address, email });
         } catch (validationError) {
           ctx.status = 500;
           ctx.message = 'Internal Server Error';
