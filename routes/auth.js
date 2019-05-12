@@ -18,6 +18,7 @@ router.post('auth', '/', async ctx => {
         id: user.id,
         username: user.username,
         password: user.password,
+	name: user.name,
         address: user.address,
         email: user.email,
         isOrganization: user.isOrganization,
