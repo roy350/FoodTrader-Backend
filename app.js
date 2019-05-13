@@ -76,6 +76,16 @@ app.use(routes.routes());
 app.use(cors());
 app.use(router.routes()).use(router.allowedMethods());
 
+app.use(async (ctx, next) => {
+  ctx.set('Access-Control-Allow-Origin', '*');
+  ctx.set(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
+  ctx.set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
+  await next();
+});
+
 router.get('/', async ctx => {
   ctx.body = 'Probando';
 });
