@@ -19,6 +19,7 @@ module.exports = {
       },
       image: {
         type: Sequelize.STRING,
+	defaultValue: 'https://raw.githubusercontent.com/sialvarez/FoodTrader-Frontend/master/src/assets/img/logo.jpg',
       },
       isActive: {
         allowNull: false,

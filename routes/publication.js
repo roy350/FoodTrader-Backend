@@ -76,7 +76,7 @@ router.post('publication.create', '/', async ctx => {
     publication.userId = currentUser.id;
     try {
       await publication.save({
-        fields: ['title', 'content', 'place', 'userId'],
+        fields: ['title', 'content', 'place', 'image', 'userId'],
       });
     } catch (validationError) {
       ctx.status = 500;
@@ -115,8 +115,8 @@ router.put('user.update', '/:id', async ctx => {
       }
       if (currentUser.id === publication.userId) {
         try {
-          const { title, content, place } = ctx.request.body;
-          await publication.update({ title, content, place });
+          const { title, content, place, image } = ctx.request.body;
+          await publication.update({ title, content, place, image });
         } catch (validationError) {
           ctx.status = 500;
           ctx.message = 'Internal Server Error';
