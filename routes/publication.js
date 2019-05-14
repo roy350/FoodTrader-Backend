@@ -74,6 +74,13 @@ router.post('publication.create', '/', async ctx => {
   if (currentUser) {
     const publication = ctx.orm.publication.build(ctx.request.body);
     publication.userId = currentUser.id;
+    if (
+      !publication.image.includes('.jpg') &&
+      !publication.image.includes('.png')
+    ) {
+      publication.image =
+        'https://raw.githubusercontent.com/sialvarez/FoodTrader-Frontend/master/src/assets/img/logo.jpg';
+    }
     try {
       await publication.save({
         fields: ['title', 'content', 'place', 'image', 'userId'],
