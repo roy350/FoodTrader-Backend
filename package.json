@@ -25,11 +25,13 @@
     "koa-router": "^7.4.0",
     "koa-session": "^5.11.0",
     "koa-static": "^5.0.0",
+    "koa-webpack": "^5.2.3",
     "nodemailer": "^6.1.1",
     "pg": "^7.10.0",
     "pg-hstore": "^2.3.2",
     "sequelize": "^5.8.4",
-    "sequelize-cli": "^5.4.0"
+    "sequelize-cli": "^5.4.0",
+    "webpack": "^4.31.0"
   },
   "devDependencies": {
     "nodemon": "^1.19.0"
