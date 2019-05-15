@@ -76,7 +76,8 @@ router.post('publication.create', '/', async ctx => {
     publication.userId = currentUser.id;
     if (
       !publication.image.includes('.jpg') &&
-      !publication.image.includes('.png')
+      !publication.image.includes('.png') &&
+      !publication.image.includes('.jpeg')
     ) {
       publication.image =
         'https://raw.githubusercontent.com/sialvarez/FoodTrader-Frontend/master/src/assets/img/logo.jpg';
