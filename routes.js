@@ -8,6 +8,7 @@ const auth = require('./routes/auth');
 const usersPost = require('./routes/userPost');
 const publication = require('./routes/publication');
 const review = require('./routes/review');
+const search = require('./routes/search');
 
 const router = new KoaRouter();
 
@@ -27,5 +28,6 @@ router.use(async (ctx, next) => {
 router.use('/users', user.routes());
 router.use('/publications', publication.routes());
 router.use('/reviews', review.routes());
+router.use('/search', search.routes());
 
 module.exports = router;
