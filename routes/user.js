@@ -115,6 +115,12 @@ router.get('users', '/:id/reviews', async ctx => {
         const reviews = await ctx.orm.review
           .findAll({ where: { userId: ctx.params.id, isActive: true } })
           .map(element => element.get({ plain: true }));
+        for (const review of reviews) {
+          const userCreator = await ctx.orm.user.findOne({
+            where: { id: review.userCreatorId, isActive: true },
+          });
+          review.userCreator = userCreator;
+        }
         ctx.body = { reviews, user: user.get({ plain: true }) };
         return ctx.body;
       } catch (validationError) {
