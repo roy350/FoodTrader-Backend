@@ -9,6 +9,8 @@ const usersPost = require('./routes/userPost');
 const publication = require('./routes/publication');
 const review = require('./routes/review');
 const search = require('./routes/search');
+const chat = require('./routes/chat');
+const message = require('./routes/message');
 
 const router = new KoaRouter();
 
@@ -29,5 +31,7 @@ router.use('/users', user.routes());
 router.use('/publications', publication.routes());
 router.use('/reviews', review.routes());
 router.use('/search', search.routes());
+router.use('/chats', chat.routes());
+router.use('/messages', message.routes());
 
 module.exports = router;

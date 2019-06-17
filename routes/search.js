@@ -37,7 +37,6 @@ router.post('publicationsUser', '/', async ctx => {
         return ctx.body;
       }
     } else if (type === 'users') {
-      console.log(Op.or);
       try {
         const users = await ctx.orm.user
           .findAll({
