@@ -3,7 +3,7 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert(
-      'chats',
+      'messages',
       [
         {
           content: 'Hola Sebi',
