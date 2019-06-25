@@ -38,7 +38,12 @@ router.get('chats', '/', async ctx => {
         const user = await ctx.orm.user.findOne({
           where: { id: otherUserId },
         });
-        response.push({ chat, user: user.get({ plain: true }) });
+        const messages = await ctx.orm.message
+          .findAll({
+            where: { isActive: true, chatId: chat.id },
+          })
+          .map(element => element.get({ plain: true }));
+        response.push({ chat, user: user.get({ plain: true }), messages });
       }
       ctx.body = response;
       return ctx.body;
