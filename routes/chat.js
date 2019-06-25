@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const router = new KoaRouter();
 
 router.get('chats', '/', async ctx => {
+  console.log('hola');
   const token = ctx.request.header.authorization.slice(7);
   const { Op } = ctx.orm.Sequelize;
   const currentUser = jwt.verify(token, process.env.WORD_SECRET);
@@ -108,23 +109,57 @@ router.post('chat.create', '/', async ctx => {
   if (currentUser) {
     const chat = ctx.orm.chat.build(ctx.request.body);
     chat.userCreatorId = currentUser.id;
-    try {
-      await chat.save({
-        fields: ['title', 'userCreatorId', 'userId'],
-      });
-    } catch (validationError) {
-      ctx.status = 500;
-      ctx.message = 'Internal Server Error';
-      ctx.body = { message: ctx.message, status: ctx.status };
+    console.log(chat.userId);
+    console.log(chat.userCreatorId);
+    const oldChat1 = await ctx.orm.chat.findOne({
+      where: {
+        isActive: true,
+        userCreatorId: chat.userCreatorId,
+        userId: chat.userId,
+      },
+    });
+    const oldChat2 = await ctx.orm.chat.findOne({
+      where: {
+        isActive: true,
+        userId: chat.userCreatorId,
+        userCreatorId: chat.userId,
+      },
+    });
+    if (oldChat1) {
+      const chat1 = oldChat1.get({ plain: true });
+      ctx.status = 201;
+      ctx.body = {
+        status: ctx.status,
+        id: chat1.id,
+      };
+      return ctx.body;
+    } else if (oldChat2) {
+      const chat2 = oldChat2.get({ plain: true });
+      ctx.status = 201;
+      ctx.body = {
+        status: ctx.status,
+        id: chat2.id,
+      };
+      return ctx.body;
+    } else {
+      try {
+        await chat.save({
+          fields: ['title', 'userCreatorId', 'userId'],
+        });
+      } catch (validationError) {
+        ctx.status = 500;
+        ctx.message = 'Internal Server Error';
+        ctx.body = { message: ctx.message, status: ctx.status };
+        return ctx.body;
+      }
+      ctx.status = 201;
+      ctx.body = {
+        message: 'Chat created correctly',
+        status: ctx.status,
+        chat: chat.get({ plain: true }),
+      };
       return ctx.body;
     }
-    ctx.status = 201;
-    ctx.body = {
-      message: 'Chat created correctly',
-      status: ctx.status,
-      chat: chat.get({ plain: true }),
-    };
-    return ctx.body;
   } else {
     ctx.status = 403;
     ctx.message = 'You must be logged';
