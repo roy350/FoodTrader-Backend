@@ -45,7 +45,8 @@ router.post('message.create', '/', async ctx => {
       data: {
         senderId: currentUser.id,
         message: message.content,
-        receiver: otherUserId,
+        chatId: message.chatId,
+        receiverId: otherUserId,
       },
     };
     const tokens = [];
