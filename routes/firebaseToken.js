@@ -30,7 +30,7 @@ router.post('firebaseToken.create', '/', async ctx => {
     ctx.body = {
       message: 'Firebase token created correctly',
       status: ctx.status,
-      message: message.get({ plain: true }),
+      token: firebaseToken.get({ plain: true }),
     };
     return ctx.body;
   } else {
