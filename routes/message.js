@@ -38,13 +38,14 @@ router.post('message.create', '/', async ctx => {
       notification: {
         title: 'Nueva mensaje',
         body: 'Mensaje de ' + currentUser.username,
-        click_action: 'http://localhost:3000/chats/' + chat.id,
+        click_action: 'http://localhost:3000/chat/',
         icon:
           'https://raw.githubusercontent.com/sialvarez/FoodTrader-Frontend/master/src/assets/img/logo.jpg',
       },
       data: {
         senderId: currentUser.id,
         message: message.content,
+        messageId: message.id,
         chatId: message.chatId,
         receiverId: otherUserId,
       },
