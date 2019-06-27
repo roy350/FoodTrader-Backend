@@ -26,6 +26,12 @@ router.post('firebaseToken.create', '/', async ctx => {
     if (repeatFirebaseToken) {
       const isActive = true;
       await repeatFirebaseToken.update({ isActive });
+      ctx.status = 201;
+      ctx.body = {
+        message: 'Firebase updated',
+        status: ctx.status,
+      };
+      return ctx.body;
     } else {
       try {
         await firebaseToken.save({
