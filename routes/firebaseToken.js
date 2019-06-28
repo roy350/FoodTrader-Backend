@@ -7,6 +7,13 @@ router.post('firebaseToken.create', '/', async ctx => {
   const token = ctx.request.header.authorization.slice(7);
   const currentUser = jwt.verify(token, process.env.WORD_SECRET);
   if (currentUser) {
+    const oldFirebaseToken = await ctx.orm.firebaseToken.findOne({
+      where: { isActive: true, userId: currentUser.id },
+    });
+    if (oldFirebaseToken) {
+      const isActive = false;
+      await oldFirebaseToken.update({ isActive });
+    }
     const firebaseToken = ctx.orm.firebaseToken.build(ctx.request.body);
     firebaseToken.userId = currentUser.id;
     const initialFirebaseToken = await ctx.orm.firebaseToken.findOne({
@@ -18,7 +25,6 @@ router.post('firebaseToken.create', '/', async ctx => {
     }
     const repeatFirebaseToken = await ctx.orm.firebaseToken.findOne({
       where: {
-        isActive: true,
         token: firebaseToken.token,
         userId: currentUser.id,
       },
