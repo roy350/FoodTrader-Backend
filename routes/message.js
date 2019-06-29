@@ -50,21 +50,11 @@ router.post('message.create', '/', async ctx => {
         receiverId: otherUserId,
       },
     };
-    const tokens = [];
-    const firebaseTokenCurrentUser = await ctx.orm.firebaseToken.findOne({
-      where: { isActive: true, userId: currentUser.id },
-    });
-    if (firebaseTokenCurrentUser) {
-      tokens.push(firebaseTokenCurrentUser.token);
-    }
     const firebaseTokenOtherUser = await ctx.orm.firebaseToken.findOne({
       where: { isActive: true, userId: otherUserId },
     });
     if (firebaseTokenOtherUser) {
-      tokens.push(firebaseTokenOtherUser.token);
-    }
-    for (const token of tokens) {
-      firebase.to = token;
+      firebase.to = firebaseTokenOtherUser.token;
       axios.post('https://fcm.googleapis.com/fcm/send', firebase, {
         headers: {
           Authorization: `key=${process.env.FCM_KEY}`,
