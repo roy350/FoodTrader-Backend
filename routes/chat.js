@@ -151,6 +151,25 @@ router.post('chat.create', '/', async ctx => {
         await chat.save({
           fields: ['title', 'userCreatorId', 'userId'],
         });
+        const message = ctx.orm.message.build();
+        const otherUser = await ctx.orm.user.findOne({
+          where: {
+            id: chat.userId,
+          },
+        });
+        message.content = 'Hola ' + otherUser.name;
+        message.userId = currentUser.id;
+        message.chatId = chat.id;
+        try {
+          await message.save({
+            fields: ['content', 'userId', 'chatId'],
+          });
+        } catch (validationError) {
+          ctx.status = 500;
+          ctx.message = 'Internal Server Error';
+          ctx.body = { message: ctx.message, status: ctx.status };
+          return ctx.body;
+        }
       } catch (validationError) {
         ctx.status = 500;
         ctx.message = 'Internal Server Error';
