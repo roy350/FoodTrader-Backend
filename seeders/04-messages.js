@@ -34,20 +34,6 @@ module.exports = {
           updatedAt: '2019-04-14 19:11:36.847+00',
         },
         {
-          content: 'Hola Javi',
-          userId: 2,
-          chatId: 3,
-          createdAt: '2019-04-14 19:11:36.847+00',
-          updatedAt: '2019-04-14 19:11:36.847+00',
-        },
-        {
-          content: 'Hola Roy',
-          userId: 3,
-          chatId: 3,
-          createdAt: '2019-04-14 19:11:36.847+00',
-          updatedAt: '2019-04-14 19:11:36.847+00',
-        },
-        {
           content: 'Hola Sebi',
           userId: 2,
           chatId: 4,
