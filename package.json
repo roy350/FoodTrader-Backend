@@ -27,7 +27,7 @@
     "koa-session": "^5.11.0",
     "koa-static": "^5.0.0",
     "koa-webpack": "^5.2.3",
-    "nodemailer": "^6.1.1",
+    "nodemailer": "^6.4.16",
     "pg": "^7.10.0",
     "pg-hstore": "^2.3.2",
     "sequelize": "^5.8.4",
